@@ -2,7 +2,7 @@
 session_start();
 require './config.php';
 
-define('BASE_URL', 'http://localhost/RecriandoContaAzul');
+define('BASE_URL', 'http://localhost/LojasGestor/LojasGestor/');
 
 /**
  * CONFIGURANDO AUTO-LOAD 
