@@ -55,9 +55,18 @@ class ClientsController extends Controller
         $u = new Users();
         $u->setLoggedUser();
 
-        $datactl = $u->getList($u->getCompany());
+        if ($u->hasPermissions('clients_view')) {
 
-        die($datactl);
+            $cl = new Clients();
+
+            $datactl = $cl->getList($u->getCompany());
+
+            die($datactl);
+        }
+        else
+        {
+            header("Location: " . BASE_URL);
+        }
     }
 
     public function add()
@@ -171,7 +180,7 @@ $intencao["tabela"] =  function ()
 {
     $cli = new ClientsController();
 
-    $cli->delet_clients('id');
+    $cli->dataTable();
 };
 
 if (isset($_POST['int']))

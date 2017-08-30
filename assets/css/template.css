@@ -13,7 +13,7 @@ h3 {
 
 body {
   font-family: 'Raleway', sans-serif;
-  font-size: 1em;
+  font-size: .9em;
   color: #263238; }
 
 .body_int {
@@ -54,7 +54,7 @@ body {
   width: 70%;
   height: 70px;
   background: #333;
-  background-image: url("../images/company.png");
+  background-image: url("../images/logomarka.png");
   background-size: cover;
   background-position: center;
   border-radius: 5%;
@@ -268,12 +268,6 @@ body {
 
 .activetab {
   color: #263238; }
-  .activetab:after {
-    content: '';
-    width: 10px;
-    border-bottom: 1px solid tomato;
-    position: absolute;
-    top: 20%; }
 
 .tabbody {
   display: none;

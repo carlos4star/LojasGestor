@@ -63,7 +63,7 @@
         <div id="openModalEdit" class="modal_Dialog">
             <div class="modal_title">
                 <h2>Formulário Alterar Usuário</h2>
-                <a href="#close" title="Fechar" class="closeModal"></a>
+                <a href="#close" id="btn_close" title="Fechar" class="closeModal"></a>
             </div>
             <div class = "modal_container">
                 <div class="message"></div>

@@ -2,7 +2,7 @@
 session_start();
 require './config.php';
 
-define('BASE_URL', 'http://localhost/LojasGestor/LojasGestor');
+define('BASE_URL', 'http://'.$_SERVER['SERVER_NAME'].'/LojasGestor/LojasGestor');
 
 /**
  * CONFIGURANDO AUTO-LOAD 

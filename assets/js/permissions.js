@@ -141,7 +141,6 @@ chkPerm();
                         distintOffset.push(key);
                     }
 
-                    $('#pagination a[y="0"]').click();
                 }
 
             },
@@ -178,10 +177,8 @@ chkPerm();
                         $('#paginationGroup').append('<div class="pag_item"><a y="' + key + '" href="">' + (key + 1) + '</a></div>');
                         distintOffset.push(key);
                     }
-
-                    $('#paginationGroup a[y="0"]').click();
                 }
-
+                $('#paginationGroup a[y="0"]').click();
             },
             error: function (jsonGroup) {
                 alert("Erro: " + jsonGroup.status);
@@ -213,6 +210,7 @@ chkPerm();
                     '</tr>'
                 );
             }
+            return false;
         });
     }
 
@@ -301,5 +299,11 @@ chkPerm();
         });
     }
 
+    $('#tabitemPerm').on('click', function () {
+        $('#pagination a[y="0"]').click();
+    });
 
+    $('#tabitemGroup').on('click', function () {
+        $('#paginationGroup a[y="0"]').click();
+    });
 });

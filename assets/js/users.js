@@ -13,6 +13,7 @@ $(function() {
     select();
     update();
     populateTableUsr();
+    close();
 
     function enviar() {
         $('#btn_add_usr').on('click', function() {
@@ -64,6 +65,7 @@ $(function() {
                     data: {id: id, int :int },
                     dataType: 'json',
                     success: function(json) {
+                        $('#pagination').empty();
                         carregarTabela();
                     }
                 });
@@ -115,6 +117,7 @@ $(function() {
                         if (json == '1') {
                             $('.message').removeClass('warn').addClass('sucesso').html('Usuário foi actualizado com sucesso !');
                             $('input').val('');
+                            $('#pagination').empty();
                             carregarTabela();
                         } else {
                             $('.message').removeClass('sucesso').addClass('warn').html('Ocorreu um erro ao atualizar o Usuário !');
@@ -127,8 +130,14 @@ $(function() {
                 $('input').val('');
                 $('input[name="email"]').focus();
             }
-
             return false;
+        });
+    }
+
+    function close() {
+        $('#btn_close').on('click', function () {
+            $('.message').removeClass('sucesso').removeClass('warn').html('');
+            $('input').val('');
         });
     }
 
@@ -156,9 +165,8 @@ $(function() {
                         $('#pagination').append('<div class="pag_item"><a y="'+key+'" href="">'+(key+1)+'</a></div>');
                         distintOffset.push(key);
                     }
-
-                    $('#pagination a[y="0"]').click();
                 }
+                $('#pagination a[y="0"]').click();
             },
             error: function(json) {
                 alert("Erro: " + json.status);

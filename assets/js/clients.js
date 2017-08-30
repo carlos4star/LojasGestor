@@ -1,3 +1,7 @@
+
+var offsetClients = [];
+
+
 $(function() {
 
     enviar();
@@ -5,7 +9,8 @@ $(function() {
     excluir();
     buscaCEP();
     buscaClients();
-    carregarTabela();
+    carregarTabelaClients();
+    populateTableclients();
 
     function enviar() {
         $('#btn_add_cli').on('click', function() {
@@ -177,20 +182,74 @@ $(function() {
         });
     }
 
-    function carregarTabela() {
+    function carregarTabelaClients() {
         var int = 'tabela';
 
         $.ajax({
-
-            url: BASE_URL + 'Clients',
+            url: BASE_URL + '/Clients',
             type: 'POST',
             data: { int: int },
             dataType: 'json',
-            success: function(json) {
-                alert(json);
+            success: function(datajson) {
+                if (datajson != '')
+                {
+                    var offsetTotal = 5;
+                    var distintOffset = [];
+                    offsetClients = [];
+
+                    for (var j = 0; j < datajson.length; j++){
+                        var key =Math.trunc(j/ offsetTotal);
+                        //
+                        offsetClients[key] = ((offsetClients[key] != undefined)? offsetClients[key]:[]);
+                        offsetClients[key].push(datajson[j]);
+
+                        if (distintOffset.indexOf(key) == -1)
+                        {
+                            $('#pagination').append('<div class="pag_item"><a y="'+key+'" href="">'+(key+1)+'</a></div>');
+                            distintOffset.push(key);
+                        }
+                    }
+                    $('#pagination a[y="0"]').click();
+                }
+                else
+                {
+                    alert('erro json vazio');
+                }
             }
 
-        })
+        });
+    }
+
+    function populateTableclients() {
+        $('#pagination').on('click', 'a', function () {
+            $('tbody').empty();
+            var pageActive = Number($(this).attr('y'));
+
+            //remover a classe "pag_ativo" da pagina selecionada e adicionar a classe "pag_ativo" pra nova pagina ativada
+            $('.pag_item a').removeClass('pag_ativo');
+            $(this).addClass('pag_ativo');
+
+            datajson = offsetClients[pageActive];
+            for (var i = 0; i < datajson.length; i++) {
+
+                $('tbody').append(
+                    '<tr id="' + datajson[i].id + '">' +
+                        '<td style="width: 35%">' + datajson[i].first_name + '</td>' +
+                        '<td style="width: 15%">' + datajson[i].phone + '</td>' +
+                        '<td style="width: 30%">' + datajson[i].address + '</td>' +
+                        '<td style="width: 5%">' + datajson[i].stars + '</td>' +
+                        '<td style="width: 15%">' +
+                            '<div style="width: 50%" class="button_small"><a style ="color: #0f9d58" pageAtive = "'+pageActive+'" position="'+i+'" name="btn_updat_clients" id="' + datajson[i].id + '">Editar</a></div>' +
+                            '<div style="width: 50%" class="button_small"><a style="color: #ff5252" name="btn_delet_clients" id="' + datajson[i].id + '">Excluir</a></div>' +
+                        '</td>' +
+                    '</tr>'
+                );
+
+
+            }
+
+            return false;
+        });
     }
 
 });

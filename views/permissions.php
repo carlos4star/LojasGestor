@@ -1,8 +1,8 @@
 <h1>Permissões</h1>
 
 <div class="tabarea">
-    <label class="tabitem activetab">Grupos de Permissões</label>
-    <label class="tabitem">Permissões</label>
+    <label id="tabitemGroup" class="tabitem activetab">Grupos de Permissões</label>
+    <label id="tabitemPerm" class="tabitem">Permissões</label>
 </div>
 
 <div class="tabcontent">

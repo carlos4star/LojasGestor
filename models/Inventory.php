@@ -2,20 +2,19 @@
 
 class Inventory extends Model
 {
-    public function getList($offset, $id_Company)
+    public function getList($id_Company)
     {
         $array = array();
 
-        $sql = "SELECT * FROM tbl_inventory WHERE id_company = :id_company OFFSET :offset LIMIT 5";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(":id_company", $id_Company);
-        $stmt->bindParam(":offset", $offset);
-        $stmt->execute();
+        $sql = $this->db->prepare("SELECT * FROM tbl_inventory WHERE id_company = :id_company");
+        $sql->bindValue(":id_company", $id_Company);
+        $sql->execute();
 
-        if ($stmt->rowCount() > 0) {
-            return $stmt->fetchAll();
+        if ($sql->rowCount() > 0)
+        {
+            $array = $sql->fetchAll();
         }
-        return $array;
+        return json_encode($array);
     }
 
     public function getInfo($id, $idCompany) {

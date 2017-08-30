@@ -7,8 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Painél - <?php echo $viewData['company_name']; ?></title>
     <link href="<?php echo BASE_URL; ?>/assets/css/template.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,400,500,600" rel="stylesheet">
-    <link href="../assets/font/Raleway.zip" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200" rel="stylesheet">
     <script type="text/javascript" src="<?= BASE_URL; ?>/assets/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript">
         var BASE_URL = "<?php echo BASE_URL; ?>";

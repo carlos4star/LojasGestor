@@ -43,6 +43,26 @@ class InventoryController extends Controller
     }
 
 
+    public function dataTable()
+    {
+        $u = new Users();
+        $u->setLoggedUser();
+
+        if ($u->hasPermissions('inventory_view')) {
+
+            $inv = new Inventory();
+
+            $datainv = $inv->getList($u->getCompany());
+
+            die($datainv);
+        }
+        else
+        {
+            header("Location: " . BASE_URL);
+        }
+    }
+
+
     public function add()
     {
         $data = array();
@@ -80,6 +100,12 @@ $intencao["Add"] =  function (){
     $inven = new InventoryController();
 
     $inven->add();
+};
+
+$intencao["tabela"] =  function (){
+    $inven = new InventoryController();
+
+    $inven->dataTable();
 };
 
 if (isset($_POST['int']))

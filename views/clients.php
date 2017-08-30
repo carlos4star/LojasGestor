@@ -24,28 +24,11 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($clients_list as $clilist): ?>
-            <tr>
-                <td style="width: 35%"><?php echo $clilist['first_name']; ?> <?php echo $clilist['last_name']; ?></td>
-                <td style="width: 15%"><?php echo $clilist['phone']; ?></td>
-                <td style="width: 30%"><?php echo $clilist['address_city']; ?></td>
-                <td style="width: 5%"><?php echo $clilist['stars']; ?></td>
-                <td style="width: 15%">
-                    <?php if ($edit_permission): ?>
-                        <div style="width: 50%" class="button_small"><a id="<?php echo $clilist['id']; ?>" name=btnTableEdit href="#openModalEditClients" name="<?php echo $clilist['id']; ?>">Editar</a></div>
-                        <div style="width: 50%" class="button_small"><a id="<?php echo $clilist['id']; ?>" name="btnTableDelet" href="<?php echo BASE_URL; ?>/clients/delet_clients/" onclick="return confirm('Tem Certeza que deseja Eliminar o Usuario ?')">Apagar</a></div>
-                    <?php else: ?>
-                        <div class="button_small"><a href="<?php echo BASE_URL; ?>/users/view_clients/<?php echo $clilist['id']; ?>">Ver</a></div>
-                    <?php endif; ?>
-                </td>
-            </tr>
-        <?php endforeach; ?>
+
         </tbody>
     </table>
-    <div class="pagination">
-        <?php for ($q=1; $q<=$p_count; $q++): ?>
-            <div class="pag_item <?php echo ($q == $p)?'pag_ativo':''; ?>"><a href="<?php echo BASE_URL; ?>/clients?p=<?php echo $q; ?>"><?php echo $q; ?></a></div>
-        <?php endfor; ?>
+    <div id="pagination" class="pagination">
+
     </div>
 
 
