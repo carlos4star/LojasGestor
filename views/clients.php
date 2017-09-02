@@ -13,21 +13,23 @@
         </div>
     </div>
 
-    <table>
-        <thead>
+    <div class="box_table">
+        <table>
+            <thead>
             <tr>
-                <th style="width: 35%">Nome</th>
+                <th style="width: 38%">Nome</th>
                 <th style="width: 15%">Telefone</th>
                 <th style="width: 30%">Cidade</th>
-                <th style="width: 5%">Estrelas</th>
-                <th style="width: 15%">Ação</th>
+                <th style="width: 10%">Estrelas</th>
+                <th style="width: 7%"></th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
 
-        </tbody>
-    </table>
-    <div id="pagination" class="pagination">
+            </tbody>
+        </table>
+        <div id="pagination" class="pagination">
+    </div>
 
     </div>
 

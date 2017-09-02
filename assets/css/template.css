@@ -129,7 +129,7 @@ body {
 .top_not {
   width: 100%;
   height: 6vh;
-  background: #2196f3;
+  background: #186db0;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -270,6 +270,7 @@ body {
   color: #263238; }
 
 .tabbody {
+  width: 100%;
   display: none;
   min-height: 50vh; }
 
@@ -321,11 +322,11 @@ table {
   flex-direction: column;
   margin-top: 10px;
   background: #fff;
-  border: .2px solid #eee;
-  padding-bottom: 5px; }
+  border: .2px solid #eee; }
 
 tbody {
-  width: 99%;
+  width: 100%;
+  margin: 5px auto;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -334,42 +335,26 @@ tbody {
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
-  flex-direction: column;
-  margin: auto; }
+  flex-direction: column; }
 
 thead {
-  width: 100%; }
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
 
 th {
   width: 100%;
   font-size: 1.1em;
   height: 50px;
-  margin-left: 7px;
   line-height: 50px;
   color: #224874;
-  font-weight: normal;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center; }
+  text-align: left;
+  margin: 5px; }
 
-th:last-child {
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center; }
+thead th:last-child {
+  text-align: center; }
 
 tr {
   width: 100%;
@@ -385,20 +370,8 @@ td {
   height: 40px;
   line-height: 40px;
   color: #224868;
-  padding-left: 7px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  cursor: pointer; }
+  cursor: pointer;
+  margin: 5px; }
 
 tbody tr {
   border-top: 1px solid #eee; }
@@ -712,14 +685,14 @@ label {
   color: #fff; }
 
 #busca {
-  width: 1px;
+  width: .5px;
   padding: 4px;
   border: none;
   background-image: url("../images/iconSearch.png");
   background-repeat: no-repeat;
   background-size: 35px 35px;
   background-position: 5px;
-  padding-left: 40px;
+  padding-left: 50px;
   border-radius: 4px;
   font-size: 1em;
   color: #333; }
@@ -768,6 +741,10 @@ label {
   opacity: 1;
   pointer-events: auto; }
 
+.openModal {
+  opacity: 1;
+  pointer-events: auto; }
+
 .modal_title {
   background: #224868;
   width: 80%;
@@ -807,3 +784,6 @@ label {
 
 .closeModal:hover {
   background: #f00; }
+
+.alert {
+  color: #f00; }

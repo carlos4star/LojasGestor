@@ -82,17 +82,20 @@ class Inventory extends Model
         $this->setLog($id, $idCompany, $idUser, 'edt');
     }
 
-    public function delete($id, $idCompany, $idUser) {
-        $sql = "DELETE FROM inventory WHERE id = :id AND id_company = :id_company";
+    public function delet_invent($id, $idCompany) {
+        $sql = "DELETE FROM tbl_inventory WHERE id = :id AND id_company = :id_company";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':id_company', $idCompany);
         $stmt->execute();
 
+        return 1;
+
         // como se fosse um log de uso
         // já persiste no inventory_history
         //$this->setLog($id, $idCompany, $idUser, 'del');
     }
+
 
     public function searchInventoryByName($name, $idCompany) {
         $sql = "SELECT * FROM inventory WHERE name LIKE :name AND id_company = :id_company LIMIT 10";

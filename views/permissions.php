@@ -1,4 +1,4 @@
-<h1>Permissões</h1>
+<h2>Permissões</h2>
 
 <div class="tabarea">
     <label id="tabitemGroup" class="tabitem activetab">Grupos de Permissões</label>
@@ -12,8 +12,8 @@
         <table id="tbl_perm">
             <thead>
                 <tr>
-                    <th style="width: 85%">Grupo de Permissão</th>
-                    <th style="width: 15%">Ação</th>
+                    <th style="width: 93%">Grupo de Permissão</th>
+                    <th style="width: 7%"></th>
                 </tr>
             </thead>
             <tbody id="tabbodyGroup">
@@ -31,8 +31,8 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width: 85%">Permissão</th>
-                    <th style="width: 15%">Ação</th>
+                    <th style="width: 93%">Permissão</th>
+                    <th style="width: 7%">Ação</th>
                 </tr>
             </thead>
             <tbody id="tabbodyPerm">

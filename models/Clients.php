@@ -128,5 +128,15 @@ class Clients extends Model
 
         return $array;
     }
+
+    public function delet_clients($id, $id_company)
+    {
+        $sql = $this->db->prepare("DELETE FROM tbl_clients WHERE id = :id AND id_company = :id_company");
+        $sql->bindValue(':id', $id);
+        $sql->bindValue(':id_company', $id_company);
+        $sql->execute();
+
+        return 1;
+    }
 }
 

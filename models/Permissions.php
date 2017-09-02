@@ -145,22 +145,28 @@ class Permissions extends Model
     }
 
 
-    public function delet($id)
+    public function delet($id, $id_company)
     {
-        $sql = $this->db->prepare("DELETE FROM tbl_permission_params WHERE id = :id");
+        $sql = $this->db->prepare("DELETE FROM tbl_permission_params WHERE id = :id AND id_company = :id_company");
         $sql->bindValue(':id', $id);
+        $sql->bindValue(':id_company', $id_company);
         $sql->execute();
+
+        return 1;
     }
 
-    public function delet_group($id)
+    public function delet_group($id, $id_company)
     {
         $u = new Users();
 
         if ($u->findUserInGroup($id) == false)
         {
-            $sql = $this->db->prepare("DELETE FROM tbl_permission_groups WHERE id = :id");
+            $sql = $this->db->prepare("DELETE FROM tbl_permission_groups WHERE id = :id AND id_company = :id_company");
             $sql->bindValue(':id', $id);
+            $sql->bindValue(':id_company', $id_company);
             $sql->execute();
         }
+
+        return 1;
     }
 }

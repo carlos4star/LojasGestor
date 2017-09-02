@@ -1,4 +1,3 @@
-
 var offsetClients = [];
 
 
@@ -100,30 +99,6 @@ $(function() {
         });
     }
 
-    function excluir() {
-        $('a[name=btnTableDelet]').on('click', function() {
-
-            var id = $(this).attr('id');
-
-            var int = 'Delet';
-
-            if (id != '') {
-                $.ajax({
-                    url: BASE_URL + '/Clients',
-                    type: 'POST',
-                    data: { id: id, int: int },
-                    dataType: 'json',
-                    success: function(json) {
-
-                    }
-                });
-            } else {
-
-            }
-            return false;
-        });
-    }
-
     function buscaCEP() {
         $('input[name=address_zipcode]').on('blur', function() {
             var nct_cep = $(this).val();
@@ -191,28 +166,24 @@ $(function() {
             data: { int: int },
             dataType: 'json',
             success: function(datajson) {
-                if (datajson != '')
-                {
+                if (datajson != '') {
                     var offsetTotal = 5;
                     var distintOffset = [];
                     offsetClients = [];
 
-                    for (var j = 0; j < datajson.length; j++){
-                        var key =Math.trunc(j/ offsetTotal);
+                    for (var j = 0; j < datajson.length; j++) {
+                        var key = Math.trunc(j / offsetTotal);
                         //
-                        offsetClients[key] = ((offsetClients[key] != undefined)? offsetClients[key]:[]);
+                        offsetClients[key] = ((offsetClients[key] != undefined) ? offsetClients[key] : []);
                         offsetClients[key].push(datajson[j]);
 
-                        if (distintOffset.indexOf(key) == -1)
-                        {
-                            $('#pagination').append('<div class="pag_item"><a y="'+key+'" href="">'+(key+1)+'</a></div>');
+                        if (distintOffset.indexOf(key) == -1) {
+                            $('#pagination').append('<div class="pag_item"><a y="' + key + '" href="">' + (key + 1) + '</a></div>');
                             distintOffset.push(key);
                         }
                     }
                     $('#pagination a[y="0"]').click();
-                }
-                else
-                {
+                } else {
                     alert('erro json vazio');
                 }
             }
@@ -221,7 +192,7 @@ $(function() {
     }
 
     function populateTableclients() {
-        $('#pagination').on('click', 'a', function () {
+        $('#pagination').on('click', 'a', function() {
             $('tbody').empty();
             var pageActive = Number($(this).attr('y'));
 
@@ -234,20 +205,44 @@ $(function() {
 
                 $('tbody').append(
                     '<tr id="' + datajson[i].id + '">' +
-                        '<td style="width: 35%">' + datajson[i].first_name + '</td>' +
-                        '<td style="width: 15%">' + datajson[i].phone + '</td>' +
-                        '<td style="width: 30%">' + datajson[i].address + '</td>' +
-                        '<td style="width: 5%">' + datajson[i].stars + '</td>' +
-                        '<td style="width: 15%">' +
-                            '<div style="width: 50%" class="button_small"><a style ="color: #0f9d58" pageAtive = "'+pageActive+'" position="'+i+'" name="btn_updat_clients" id="' + datajson[i].id + '">Editar</a></div>' +
-                            '<div style="width: 50%" class="button_small"><a style="color: #ff5252" name="btn_delet_clients" id="' + datajson[i].id + '">Excluir</a></div>' +
-                        '</td>' +
+                    '<td style="width: 38%; text-align: left">' + datajson[i].first_name + ' ' + datajson[i].last_name + '</td>' +
+                    '<td style="width: 15%; text-align: left">' + datajson[i].phone + '</td>' +
+                    '<td style="width: 30%; text-align: left">' + datajson[i].address + '</td>' +
+                    '<td style="width: 10%; text-align: left">' + datajson[i].stars + '</td>' +
+                    '<td style="width: 7%; text-align: center">' +
+                    '<div style="width: 100%" class="button_small"><a style="color: #ff5252" name="btn_delet_clients" id="' + datajson[i].id + '">Excluir</a></div>' +
+                    '</td>' +
                     '</tr>'
                 );
 
 
             }
 
+            return false;
+        });
+    }
+
+    function excluir() {
+        $('tbody').on('click', "a[name='btn_delet_clients']", function() {
+            var id = $(this).attr('id');
+
+            var int = 'delet';
+
+            if (id != '') {
+
+                $.ajax({
+                    url: BASE_URL + '/Clients',
+                    type: 'POST',
+                    data: { id: id, int: int },
+                    dataType: 'json',
+                    success: function(json) {
+                        $('#pagination').empty();
+                        carregarTabelaClients();
+                    }
+                });
+            } else {
+
+            }
             return false;
         });
     }

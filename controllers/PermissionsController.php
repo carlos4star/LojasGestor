@@ -220,21 +220,15 @@ class PermissionsController extends Controller
 
     public function delet($id)
     {
-        $data = array();
-
         $u = new Users();
         $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
 
         if ($u->hasPermissions('permission_view'))
         {
             $permissions = new Permissions();
 
-            $permissions->delet($id);
-            header("Location: ".BASE_URL."/permissions");
+            $perm = $permissions->delet($id, $u->getCompany());
+            die($perm);
         }
         else
         {
@@ -244,21 +238,14 @@ class PermissionsController extends Controller
 
     public function delet_group($id)
     {
-        $data = array();
-
         $u = new Users();
         $u->setLoggedUser();
-        $company = new Companies($u->getCompany());
-
-        $data['company_name'] = $company->getName();
-        $data['user_email'] = $u->getEmail();
 
         if ($u->hasPermissions('permission_view'))
         {
             $permissions = new Permissions();
 
-            $permissions->delet_group($id);
-            header("Location: ".BASE_URL."/permissions");
+            $permissions->delet_group($id, $u->getCompany());
         }
         else
         {
@@ -302,6 +289,18 @@ $intencao["chekPerm"] =  function (){
     $perm = new PermissionsController();
 
     $perm->chkPerm();
+};
+
+$intencao["delet_perm"] =  function (){
+    $perm = new PermissionsController();
+
+    $perm->delet($_POST['id']);
+};
+
+$intencao["delet_group"] =  function (){
+    $perm = new PermissionsController();
+
+    $perm->delet_group($_POST['id']);
 };
 
 if (isset($_POST['int']))

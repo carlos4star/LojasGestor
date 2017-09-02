@@ -149,9 +149,20 @@ class ClientsController extends Controller
         }
     }
 
-    public function delet_clients()
+    public function delet_clients($id)
     {
+        $u = new Users();
+        $u->setLoggedUser();
 
+        if ($u->hasPermissions('clients_view')) {
+            $ctl = new Clients();
+            $usr = $ctl->delet_clients($id, $u->getCompany());
+            die (json_encode($usr));
+        }
+        else
+        {
+            header("Location: " . BASE_URL);
+        }
     }
 }
 
@@ -169,11 +180,11 @@ $intencao["Edit"] =  function ()
     $cli->edit_clients($_POST['id']);
 };
 
-$intencao["Delet"] =  function ()
+$intencao["delet"] =  function ()
 {
     $cli = new ClientsController();
 
-    $cli->delet_clients('id');
+    $cli->delet_clients($_POST['id']);
 };
 
 $intencao["tabela"] =  function ()

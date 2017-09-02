@@ -1,19 +1,21 @@
-var offset =  [];
+var offset = [];
 var offsetGroup = [];
 var permArray = [];
 var idPerm;
 
-$(function (){
+$(function() {
 
-tabItem();
-enviarPerm();
-enviarGroup();
-carregarTabelaPerm();
-carregarTabelaGroup();
-populateTablePermission();
-populateTabelaGroup();
-carregarPerm();
-chkPerm();
+    tabItem();
+    enviarPerm();
+    enviarGroup();
+    carregarTabelaPerm();
+    carregarTabelaGroup();
+    populateTablePermission();
+    populateTabelaGroup();
+    carregarPerm();
+    chkPerm();
+    excluir_group();
+    excluir_perm();
 
     function tabItem() {
         $('.tabitem').on('click', function() {
@@ -29,34 +31,28 @@ chkPerm();
     $('.tabbody').eq(0).show();
 
     function enviarPerm() {
-        $('#btn_add_perm').on('click', function () {
+        $('#btn_add_perm').on('click', function() {
             var nome = $('input[name="nome"]').val();
 
             var int = 'Add';
 
-            if (nome != '')
-            {
+            if (nome != '') {
                 $.ajax({
                     url: BASE_URL + '/Permissions',
                     type: 'POST',
-                    data: {nome: nome, int :int },
+                    data: { nome: nome, int: int },
                     dataType: 'json',
                     success: function(json) {
-                        if (json == '1')
-                        {
-                            $('.message').removeClass('warn').addClass('sucesso').html('A Permissão '+nome+' foi enviado com sucesso !');
+                        if (json == '1') {
+                            $('.message').removeClass('warn').addClass('sucesso').html('A Permissão ' + nome + ' foi enviado com sucesso !');
                             $('input').val('');
-                        }
-                        else
-                        {
-                            $('.message').removeClass('sucesso').addClass('warn').html('Oops, ocorreu um errro. A Permissão: '+json+' não foi enviada !');
+                        } else {
+                            $('.message').removeClass('sucesso').addClass('warn').html('Oops, ocorreu um errro. A Permissão: ' + json + ' não foi enviada !');
                             $('input').val('');
                         }
                     }
                 });
-            }
-            else
-            {
+            } else {
                 $('.message').removeClass('sucesso').addClass('warn').html('Por favor um ou mais campos estão vazios !');
                 $('input').val('');
                 $('input[name="nome"]').focus();
@@ -67,10 +63,10 @@ chkPerm();
     }
 
     function enviarGroup() {
-        $('#btn_add_group').on('click', function () {
+        $('#btn_add_group').on('click', function() {
             var nome = $('input[name="nome_group"]').val();
             var groups = [];
-            $('input[name="permissions[]"]:checked').each(function(){
+            $('input[name="permissions[]"]:checked').each(function() {
                 groups.push($(this).attr('id'));
             });
 
@@ -78,32 +74,26 @@ chkPerm();
 
             var int = 'AddGroup';
 
-            if (nome != '')
-            {
+            if (nome != '') {
                 $.ajax({
                     url: BASE_URL + '/Permissions',
                     type: 'POST',
-                    data: {nome: nome, permissions:permissions, int :int },
+                    data: { nome: nome, permissions: permissions, int: int },
                     dataType: 'json',
                     success: function(json) {
-                        if (json == '1')
-                        {
-                            $('.message').removeClass('warn').addClass('sucesso').html('A Permissão '+nome+' foi enviado com sucesso !');
+                        if (json == '1') {
+                            $('.message').removeClass('warn').addClass('sucesso').html('A Permissão ' + nome + ' foi enviado com sucesso !');
                             $('input').val('');
                             cleanCheckBox();
                             carregarTabelaGroup();
-                        }
-                        else
-                        {
-                            $('.message').removeClass('sucesso').addClass('warn').html('Oops, ocorreu um errro. A Permissão: '+json+' não foi enviada !');
+                        } else {
+                            $('.message').removeClass('sucesso').addClass('warn').html('Oops, ocorreu um errro. A Permissão: ' + json + ' não foi enviada !');
                             $('input').val('');
                             cleanCheckBox();
                         }
                     }
                 });
-            }
-            else
-            {
+            } else {
                 $('.message').removeClass('sucesso').addClass('warn').html('Por favor um ou mais campos estão vazios !');
                 $('input').val('');
                 cleanCheckBox();
@@ -121,9 +111,9 @@ chkPerm();
 
             url: BASE_URL + '/Permissions',
             type: 'POST',
-            data: {int: int},
+            data: { int: int },
             dataType: 'json',
-            success: function (jsonPerm) {
+            success: function(jsonPerm) {
 
 
                 var offsetTotal = 5;
@@ -144,7 +134,7 @@ chkPerm();
                 }
 
             },
-            error: function (jsonPerm) {
+            error: function(jsonPerm) {
                 alert("Erro: " + jsonPerm.status);
             }
         });
@@ -157,9 +147,9 @@ chkPerm();
 
             url: BASE_URL + '/Permissions',
             type: 'POST',
-            data: {int: int},
+            data: { int: int },
             dataType: 'json',
-            success: function (jsonGroup) {
+            success: function(jsonGroup) {
 
 
                 var offsetTotal = 5;
@@ -172,23 +162,21 @@ chkPerm();
                     offsetGroup[key] = ((offsetGroup[key] != undefined) ? offsetGroup[key] : []);
                     offsetGroup[key].push(jsonGroup[j]);
 
-                    if (distintOffset.indexOf(key) == -1)
-                    {
+                    if (distintOffset.indexOf(key) == -1) {
                         $('#paginationGroup').append('<div class="pag_item"><a y="' + key + '" href="">' + (key + 1) + '</a></div>');
                         distintOffset.push(key);
                     }
                 }
                 $('#paginationGroup a[y="0"]').click();
             },
-            error: function (jsonGroup) {
+            error: function(jsonGroup) {
                 alert("Erro: " + jsonGroup.status);
             }
         });
     }
 
     function populateTablePermission() {
-        $('#pagination').on('click', 'a', function ()
-        {
+        $('#pagination').on('click', 'a', function() {
             $('tbody').empty();
             var pageActive = Number($(this).attr('y'));
 
@@ -202,10 +190,9 @@ chkPerm();
 
                 $('#tabbodyPerm').append(
                     '<tr id="' + jsonPerm[i].id + '">' +
-                    '<td style="width: 85%">' + jsonPerm[i].nome + '</td>' +
-                    '<td style="width: 15%">' +
-                    '<div style="width: 50%" class="button_small"><a style ="color: #0f9d58" href="#openModalEdit" id="' + jsonPerm[i].id + '">Editar</a></div>' +
-                    '<div style="width: 50%" class="button_small"><a style="color: #ff5252" name="btn_delet_usr" id="' + jsonPerm[i].id + '">Excluir</a></div>' +
+                    '<td style="width: 93%">' + jsonPerm[i].nome + '</td>' +
+                    '<td style="width: 7%">' +
+                    '<div style="width: 100%" class="button_small"><a style="color: #ff5252" name="btn_delet_perm" id="' + jsonPerm[i].id + '">Excluir</a></div>' +
                     '</td>' +
                     '</tr>'
                 );
@@ -215,7 +202,7 @@ chkPerm();
     }
 
     function populateTabelaGroup() {
-        $('#paginationGroup').on('click', 'a', function () {
+        $('#paginationGroup').on('click', 'a', function() {
 
             $('tbody').empty();
             var pageActive = Number($(this).attr('y'));
@@ -230,10 +217,9 @@ chkPerm();
 
                 $('#tabbodyGroup').append(
                     '<tr id="' + jsonGroup[i].id + '">' +
-                    '<td style="width: 85%">' + jsonGroup[i].name + '</td>' +
-                    '<td style="width: 15%">' +
-                    '<div style="width: 50%" class="button_small"><a style ="color: #0f9d58" href="#openModalEdit" id="' + jsonGroup[i].id + '">Editar</a></div>' +
-                    '<div style="width: 50%" class="button_small"><a style="color: #ff5252" name="btn_delet_usr" id="' + jsonGroup[i].id + '">Excluir</a></div>' +
+                    '<td style="width: 93%">' + jsonGroup[i].name + '</td>' +
+                    '<td style="width: 7%">' +
+                    '<div style="width: 100%" class="button_small"><a style="color: #ff5252" name="btn_delet_group" id="' + jsonGroup[i].id + '">Excluir</a></div>' +
                     '</td>' +
                     '</tr>'
                 );
@@ -251,12 +237,11 @@ chkPerm();
             data: { int: int },
             dataType: 'json',
             success: function(json) {
-                for(var i = 0; i < json.length; i++)
-                {
+                for (var i = 0; i < json.length; i++) {
                     $('#Group_perm').append(
-                        '<div class="p_item">'+
-                            '<input type="checkbox" name="permissions[]" value="'+json[i].id+'" id="'+json[i].id+'"/>'+
-                            '<label for="'+json[i].id+'">'+json[i].nome+'</label>'+
+                        '<div class="p_item">' +
+                        '<input type="checkbox" name="permissions[]" value="' + json[i].id + '" id="' + json[i].id + '"/>' +
+                        '<label for="' + json[i].id + '">' + json[i].nome + '</label>' +
                         '</div>'
                     );
                 }
@@ -279,9 +264,9 @@ chkPerm();
 
             url: BASE_URL + '/Permissions',
             type: 'POST',
-            data: {int: int},
+            data: { int: int },
             dataType: 'json',
-            success: function (json) {
+            success: function(json) {
 
                 permArray = [];
 
@@ -293,17 +278,71 @@ chkPerm();
                 }
 
             },
-            error: function (json) {
+            error: function(json) {
                 alert("Erro: " + json.status);
             }
         });
     }
 
-    $('#tabitemPerm').on('click', function () {
+    $('#tabitemPerm').on('click', function() {
         $('#pagination a[y="0"]').click();
     });
 
-    $('#tabitemGroup').on('click', function () {
+    $('#tabitemGroup').on('click', function() {
         $('#paginationGroup a[y="0"]').click();
     });
+
+    function excluir_group() {
+        $('tbody').on('click', "a[name='btn_delet_group']", function() {
+            var id = $(this).attr('id');
+
+            var int = 'delet_group';
+
+            if (id != '') {
+                $.ajax({
+                    url: BASE_URL + '/Permissions',
+                    type: 'POST',
+                    data: { id: id, int: int },
+                    dataType: 'json',
+                    success: function(json) {
+                        $('#paginationGroup').empty();
+                        $('#tabitemGroup').on('click', function() {
+                            $('#paginationGroup a[y="0"]').click();
+                        });
+                    }
+                });
+            } else {
+
+            }
+            return false;
+        });
+    }
+
+
+    function excluir_perm() {
+        $('tbody').on('click', "a[name='btn_delet_perm']", function() {
+            var id = $(this).attr('id');
+
+            var int = 'delet_perm';
+
+            if (id != '') {
+                $.ajax({
+                    url: BASE_URL + '/Permissions',
+                    type: 'POST',
+                    data: { id: id, int: int },
+                    dataType: 'json',
+                    success: function(json) {
+                        $('#pagination').empty();
+                        $('#tabitemPerm').on('click', function() {
+                            $('#pagination a[y="0"]').click();
+                        });
+                    }
+                });
+            } else {
+
+            }
+            return false;
+        });
+    }
+
 });

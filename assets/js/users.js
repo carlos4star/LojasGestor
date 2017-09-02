@@ -1,4 +1,3 @@
-
 var offset = [];
 var option = [];
 
@@ -6,80 +5,50 @@ var idUsr;
 
 $(function() {
 
-    enviar();
     modalEdit();
     carregarTabela();
-    excluir();
     select();
     update();
     populateTableUsr();
     close();
 
-    function enviar() {
-        $('#btn_add_usr').on('click', function() {
+    $('#btnOpenModal').on('click', 'a', function () {
+        $('#openModal').addClass('openModal');
+    });
 
-            var email = $('input[name="email"]').val();
-            var password = $('input[name="password"]').val();
-            var groups = $('select[name="groups"]').val();
+    $('.closeModal').on('click', function () {
+        $('#openModal').removeClass('openModal');
+    });
 
-            var int = 'Add';
+    $('#btn_add_usr').on('click', function() {
+        enviar();
+    });
 
-            if (email != '' && password != '' && groups != '') {
-                $.ajax({
-                    url: BASE_URL + '/Users',
-                    type: 'POST',
-                    data: { email: email, password: password, groups: groups, int: int },
-                    datatype: 'json',
-                    async: false,
-                    success: function(json) {
-                        if (json == '1') {
-                            $('#message').removeClass('warn').addClass('sucesso').html('Usuário ' + email + ' foi cadastrado com sucesso !');
-                            $('input').val('');
-                            carregarTabela();
-                        } else {
-                            $('#message').removeClass('sucesso').addClass('warn').html('Usuário com o email: ' + email + ' já existe !');
-                            $('input').val('');
-                        }
-                    }
-                });
-            } else {
-                $('#message').removeClass('sucesso').addClass('warn').html('Por favor um ou mais campos estão vazios !');
-                $('input').val('');
-                $('input[name="email"]').focus();
-            }
+    $('tbody').on('click', "a[name='btn_delet_usr']", function() {
+        var id = $(this).attr('id');
 
-            return false;
-        });
-    }
+        var int = 'Delet';
 
-    function excluir() {
-        $('tbody').on('click',"a[name='btn_delet_usr']", function() {
-            var id = $(this).attr('id');
+        if (id != '') {
+            $.ajax({
+                url: BASE_URL + '/Users',
+                type: 'POST',
+                data: { id: id, int: int },
+                dataType: 'json',
+                success: function(json) {
+                    $('#pagination').empty();
+                    carregarTabela();
+                }
+            });
+        } else {
 
-            var int = 'Delet';
-
-            if (id != '') {
-                $.ajax({
-                    url: BASE_URL + '/Users',
-                    type: 'POST',
-                    data: {id: id, int :int },
-                    dataType: 'json',
-                    success: function(json) {
-                        $('#pagination').empty();
-                        carregarTabela();
-                    }
-                });
-            } else {
-
-            }
-            return false;
-        });
-    }
-
+        }
+        return false;
+    });
     function modalEdit() {
-        $('tbody').on('click',"a[name='btn_updat_usr']", function() {
+        $('tbody').on('click', "a[name='btn_updat_usr']", function() {
 
-            location.href="#openModalEdit";
+            location.href = "#openModalEdit";
 
 
             var pagAtive = Number($(this).attr('pageAtive'));
@@ -135,7 +104,7 @@ $(function() {
     }
 
     function close() {
-        $('#btn_close').on('click', function () {
+        $('#btn_close').on('click', function() {
             $('.message').removeClass('sucesso').removeClass('warn').html('');
             $('input').val('');
         });
@@ -154,15 +123,14 @@ $(function() {
                 var distintOffset = [];
                 offset = [];
 
-                for (var j = 0; j < json.length; j++){
-                    var key =Math.trunc(j/ offsetTotal);
+                for (var j = 0; j < json.length; j++) {
+                    var key = Math.trunc(j / offsetTotal);
                     //
-                    offset[key] = ((offset[key] != undefined)? offset[key]:[]);
+                    offset[key] = ((offset[key] != undefined) ? offset[key] : []);
                     offset[key].push(json[j]);
 
-                    if (distintOffset.indexOf(key) == -1)
-                    {
-                        $('#pagination').append('<div class="pag_item"><a y="'+key+'" href="">'+(key+1)+'</a></div>');
+                    if (distintOffset.indexOf(key) == -1) {
+                        $('#pagination').append('<div class="pag_item"><a y="' + key + '" href="">' + (key + 1) + '</a></div>');
                         distintOffset.push(key);
                     }
                 }
@@ -175,7 +143,7 @@ $(function() {
     }
 
     function populateTableUsr() {
-        $('#pagination').on('click', 'a', function () {
+        $('#pagination').on('click', 'a', function() {
             $('tbody').empty();
             var pageActive = Number($(this).attr('y'));
 
@@ -188,11 +156,10 @@ $(function() {
 
                 $('tbody').append(
                     '<tr id="' + json[i].id + '">' +
-                    '<td style="width: 40%">' + json[i].email + '</td>' +
+                    '<td style="width: 48%">' + json[i].email + '</td>' +
                     '<td style="width: 45%">' + json[i].name + '</td>' +
-                    '<td style="width: 15%">' +
-                    '<div style="width: 50%" class="button_small"><a style ="color: #0f9d58" pageAtive = "'+pageActive+'" position="'+i+'" name="btn_updat_usr" id="' + json[i].id + '">Editar</a></div>' +
-                    '<div style="width: 50%" class="button_small"><a style="color: #ff5252" name="btn_delet_usr" id="' + json[i].id + '">Excluir</a></div>' +
+                    '<td style="width: 7%">' +
+                    '<div style="width: 100%" class="button_small"><a style="color: #ff5252" name="btn_delet_usr" id="' + json[i].id + '">Excluir</a></div>' +
                     '</td>' +
                     '</tr>'
                 );
@@ -214,17 +181,50 @@ $(function() {
             data: { int: int },
             dataType: 'json',
             success: function(json) {
-                for(var i = 0; i < json.length; i++)
-                {
+                for (var i = 0; i < json.length; i++) {
 
                     option = json[i];
                     $('.groupsPerm').append(
-                        '<option value="'+json[i].id+'" name="'+json[i].name+'">'+json[i].name+'</option>'
+                        '<option value="' + json[i].id + '" name="' + json[i].name + '">' + json[i].name + '</option>'
                     );
                 }
 
             }
         });
+    }
+
+    function enviar() {
+        var email = $('input[name="email"]').val();
+        var password = $('input[name="password"]').val();
+        var groups = $('select[name="groups"]').val();
+
+        var int = 'Add';
+
+        if (email != '' && password != '' && groups != '') {
+            $.ajax({
+                url: BASE_URL + '/Users',
+                type: 'POST',
+                data: { email: email, password: password, groups: groups, int: int },
+                datatype: 'json',
+                async: false,
+                success: function(json) {
+                    if (json == '1') {
+                        $('#message').removeClass('warn').addClass('sucesso').html('Usuário ' + email + ' foi cadastrado com sucesso !');
+                        $('input').val('');
+                        carregarTabela();
+                    } else {
+                        $('#message').removeClass('sucesso').addClass('warn').html('Usuário com o email: ' + email + ' já existe !');
+                        $('input').val('');
+                    }
+                }
+            });
+        } else {
+            $('#message').removeClass('sucesso').addClass('warn').html('Por favor um ou mais campos estão vazios !');
+            $('input').val('');
+            $('input[name="email"]').focus();
+        }
+
+        return false;
     }
 
 });

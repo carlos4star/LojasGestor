@@ -17,11 +17,11 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 45%">Nome</th>
+                <th style="width: 53%">Nome</th>
                 <th style="width: 20%">Preço</th>
                 <th style="width: 15%">Quantidade</th>
                 <th style="width: 15%">Quant.Min</th>
-                <th style="width: 15%">Ação</th>
+                <th style="width: 7%"></th>
             </tr>
         </thead>
         <tbody>

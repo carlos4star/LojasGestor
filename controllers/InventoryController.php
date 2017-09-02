@@ -93,6 +93,23 @@ class InventoryController extends Controller
             header("Location: " . BASE_URL."/inventory");
         }
     }
+
+    public function delet_inv($id)
+    {
+        $u = new Users();
+        $u->setLoggedUser();
+
+        if ($u->hasPermissions('inventory_view'))
+        {
+            $inv = new Inventory();
+            $invent = $inv->delet_invent($id, $u->getCompany());
+            die (json_encode($invent));
+        }
+        else
+        {
+            header("Location: " . BASE_URL);
+        }
+    }
 }
 
 
@@ -106,6 +123,12 @@ $intencao["tabela"] =  function (){
     $inven = new InventoryController();
 
     $inven->dataTable();
+};
+
+$intencao["delet"] =  function (){
+    $inven = new InventoryController();
+
+    $inven->delet_inv($_POST['id']);
 };
 
 if (isset($_POST['int']))

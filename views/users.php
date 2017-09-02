@@ -2,14 +2,14 @@
 
 <div class="tabbody">
 
-        <div class='button'><a href="<?php echo BASE_URL; ?>/users/#openModal">+ Usuário</a></div>
+        <div class='button' id="btnOpenModal"><a>+ Usuário</a></div>
         <h2></h2>
         <table id="tab_usr">
             <thead>
                 <tr>
-                    <th style="width: 40%">USUÁRIO</th>
+                    <th style="width: 48%">USUÁRIO</th>
                     <th style="width: 45%">GRUPO</th>
-                    <th style="width: 15%; text-align: center"></th>
+                    <th style="width: 7%; text-align: center"></th>
                 </tr>
             </thead>
 
@@ -29,7 +29,7 @@
         <div id="openModal" class="modal_Dialog">
             <div class="modal_title">
                 <h2>Formulário de Usuário</h2>
-                <a href="#close" title="Fechar" class="closeModal"></a>
+                <a title="Fechar" class="closeModal"></a>
             </div>
             <div class = "modal_container">
                 <div class="message"></div>

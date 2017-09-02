@@ -26,7 +26,7 @@
         </div>
         <div class="menu_lateral">
             <ul>
-                <li><a href="<?php echo BASE_URL; ?>">Home</a></li>
+                <li class="menu_ativo"><a href="<?php echo BASE_URL; ?>">Home</a></li>
                 <li><a href="<?php echo BASE_URL; ?>/Permissions">Permissões</a></li>
                 <li><a href="<?php echo BASE_URL; ?>/Users">Usuários</a></li>
                 <li><a href="<?php echo BASE_URL; ?>/Clients">Clientes</a></li>
